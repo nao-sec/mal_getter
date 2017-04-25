@@ -34,7 +34,7 @@ if($response['status'] < 200 || $response['status'] >= 400)
     exit(-1);
 }
 $html = $response['body'] . '';
-file_put_contents(date('Y-m-d_H:i:s') . '.html', $html);
+file_put_contents(date('Y-m-d_H-i-s') . '.html', $html);
 
 $html = explode("\n", $html);
 $js[0][0] = substr(trim($html[5]), 25);
