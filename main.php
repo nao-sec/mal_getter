@@ -37,11 +37,11 @@ $html = $response['body'] . '';
 file_put_contents(date('Y-m-d_H-i-s') . '.html', $html);
 
 $html = explode("\n", $html);
-$js[0][0] = substr(trim($html[5]), 25);
-$js[0][1] = substr(trim($html[6]), 12);
-$js[1][0] = substr(trim($html[12]), 25);
-$js[1][1] = substr(trim($html[13]), 12);
-$js[2][0] = substr(trim($html[17]), 25);
+$js[0][0] = substr(trim($html[3]), 34);
+$js[0][1] = substr(trim($html[4]), 12);
+$js[1][0] = substr(trim($html[10]), 27);
+$js[1][1] = substr(trim($html[11]), 12);
+$js[2][0] = substr(trim($html[17]), 27);
 $js[2][1] = substr(trim($html[18]), 12);
 
 $split[0][0] = substr($js[0][0], -4, 1);
