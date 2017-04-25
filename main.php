@@ -117,5 +117,5 @@ echo '[*] ' . $url . PHP_EOL;
 
 $malware = Request::get($url, $old_url);
 $filename = date('Y-m-d_H-i-s') . '.bin';
-file_put_contents($filename, $malware);
+file_put_contents($filename, $malware['body']);
 echo '[!] ' . $filename . PHP_EOL;
