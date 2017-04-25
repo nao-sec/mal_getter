@@ -9,10 +9,11 @@ if($argc < 2)
 }
 
 $url = $argv[1];
+echo '[*] ' . $url . PHP_EOL;
 $response = Request::get($url);
 if($response['status'] < 200 || $response['status'] >= 400)
 {
-    echo 'status => ' . $response['status'];
+    echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
     exit(-1);
 }
 $html = $response['body'] . '';
@@ -25,11 +26,12 @@ $old_url = $url;
 // GoodMan
 preg_match_all('/<iframe src=\'.+\' width=\'250\' height=\'250\'><\/iframe>/', $html, $url);
 $url = str_replace('<iframe src=\'', '', str_replace('\' width=\'250\' height=\'250\'><\/iframe>', '', $url[0][0]));
+echo '[*] ' . $url . PHP_EOL;
 
 $response = Request::get($url, $old_url);
 if($response['status'] < 200 || $response['status'] >= 400)
 {
-    echo 'status => ' . $response['status'];
+    echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
     exit(-1);
 }
 $html = $response['body'] . '';
@@ -111,9 +113,9 @@ for($i=0; $i<count($code); $i++)
     }
 }
 
-echo $url;
+echo '[*] ' . $url . PHP_EOL;
 
 $malware = Request::get($url, $old_url);
 $filename = date('Y-m-d_H-i-s') . '.bin';
 file_put_contents($filename, $malware);
-echo 'saved => ' . $filename;
+echo '[!] ' . $filename . PHP_EOL;
