@@ -24,8 +24,7 @@ $old_url = $url;
 // $url = str_replace('";', '', str_replace(' = "', '', end($url)[0]));
 
 // GoodMan
-preg_match_all('/<iframe src=\'.+\' width=\'250\' height=\'250\'><\/iframe>/', $html, $url);
-$url = str_replace('<iframe src=\'', '', str_replace('\' width=\'250\' height=\'250\'><\/iframe>', '', $url[0][0]));
+$url = explode('\'', explode('iframe src=\'', $html)[1])[0];
 echo '[*] ' . $url . PHP_EOL;
 
 $response = Request::get($url, $old_url);
