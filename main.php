@@ -5,7 +5,7 @@ require_once 'Request.php';
 
 if($argc < 3)
 {
-    echo argv[0] . ' [Campaign] [EK] [URL]';
+    echo $argv[0] . ' [Campaign] [EK] [URL]';
     exit(-1);
 }
 
