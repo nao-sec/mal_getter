@@ -5,7 +5,7 @@ require_once 'Request.php';
 
 if($argc < 3)
 {
-    echo $argv[0] . ' [Campaign] [EK] [URL]';
+    echo $argv[0] . ' [Campaign] [EK] [URL]' . PHP_EOL;
     exit(-1);
 }
 
@@ -15,13 +15,13 @@ $url = $argv[3];
 
 if($campaign !== 'eitest' && $campaign !== 'goodman')
 {
-    echo argv[0] . ' Undefined Campaign';
+    echo $argv[0] . ' Undefined Campaign' . PHP_EOL;
     exit(-1);
 }
 
 if($ek !== 'rig')
 {
-    echo argv[0] . ' Undefined Exploit Kit';
+    echo $argv[0] . ' Undefined Exploit Kit' . PHP_EOL;
     exit(-1);
 }
 
