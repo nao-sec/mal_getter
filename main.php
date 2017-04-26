@@ -3,7 +3,7 @@
 require_once 'RC4.php';
 require_once 'Request.php';
 
-if($argc < 3)
+if($argc < 4)
 {
     echo $argv[0] . ' [Campaign] [EK] [URL]' . PHP_EOL;
     exit(-1);
