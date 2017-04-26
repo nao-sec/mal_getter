@@ -1,5 +1,6 @@
 <?php
 
+require_once 'RC4.php';
 require_once 'Request.php';
 
 if($argc < 3)
@@ -139,6 +140,11 @@ for($i=0; $i<count($code); $i++)
 echo '[*] ' . $url . PHP_EOL;
 
 $malware = Request::get($url, $old_url);
+$malware = $malware['body'];
+
+$key = 'gexywoaxor';
+$malware = RC4::calc($malware, $key);
+
 $filename = date('Y-m-d_H-i-s') . '.bin';
-file_put_contents($filename, $malware['body']);
+file_put_contents($filename, $malware);
 echo '[!] ' . $filename . PHP_EOL;
