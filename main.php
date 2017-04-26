@@ -2,13 +2,28 @@
 
 require_once 'Request.php';
 
-if($argc < 2)
+if($argc < 3)
 {
-    echo argv[0] . ' [URL]';
+    echo argv[0] . ' [Campaign] [EK] [URL]';
     exit(-1);
 }
 
-$url = $argv[1];
+$campaign = strtolower($argv[1]);
+$ek = strtolower($argv[2]);
+$url = $argv[3];
+
+if($campaign !== 'eitest' && $campaign !== 'goodman')
+{
+    echo argv[0] . ' Undefined Campaign';
+    exit(-1);
+}
+
+if($ek !== 'rig')
+{
+    echo argv[0] . ' Undefined Exploit Kit';
+    exit(-1);
+}
+
 echo '[*] ' . $url . PHP_EOL;
 $response = Request::get($url);
 if($response['status'] < 200 || $response['status'] >= 400)
@@ -20,11 +35,19 @@ $html = $response['body'] . '';
 $old_url = $url;
 
 // EITest
-// preg_match_all('/ = "http:\/\/.+";/', $html, $url);
-// $url = str_replace('";', '', str_replace(' = "', '', end($url)[0]));
+if($campaign === 'eitest')
+{
+    $url = explode(' = "http://', $html)[1];
+    $url = explode('";', $url)[0];
+    $url = 'http://' . $url;
+}
 
 // GoodMan
-$url = explode('\'', explode('iframe src=\'', $html)[1])[0];
+if($campaign === 'goodman')
+{
+    $url = explode('\'', explode('iframe src=\'', $html)[1])[0];
+}
+
 echo '[*] ' . $url . PHP_EOL;
 
 $response = Request::get($url, $old_url);
