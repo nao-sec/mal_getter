@@ -1,5 +1,9 @@
 # mal_getter
-It is a tool for dropping malware from EK
+It is a tool for dropping malware from EK  
+
+Currently this tool can analyze EITest, GoodMan and RigEK.  
+It depends on Campaign and EK implementation,  
+so the possibility that this will not work is very high.
 
 ## Require
 - PHP 7
