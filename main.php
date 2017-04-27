@@ -25,6 +25,8 @@ if($ek !== 'rig')
     exit(-1);
 }
 
+$filename = date('Y-m-d_H-i-s');
+
 echo '[*] ' . $url . PHP_EOL;
 $response = Request::get($url);
 if($response['status'] < 200 || $response['status'] >= 400)
@@ -33,6 +35,7 @@ if($response['status'] < 200 || $response['status'] >= 400)
     exit(-1);
 }
 $html = $response['body'] . '';
+file_put_contents($filename . '_0.html', $html);
 $old_url = $url;
 
 // EITest
@@ -58,7 +61,7 @@ if($response['status'] < 200 || $response['status'] >= 400)
     exit(-1);
 }
 $html = $response['body'] . '';
-file_put_contents(date('Y-m-d_H-i-s') . '.html', $html);
+file_put_contents($filename . '_1.html', $html);
 
 $html = explode("\n", $html);
 $js[0][0] = substr(trim($html[3]), 34);
@@ -145,6 +148,5 @@ $malware = $malware['body'];
 $key = 'gexywoaxor';
 $malware = RC4::calc($malware, $key);
 
-$filename = date('Y-m-d_H-i-s') . '.bin';
-file_put_contents($filename, $malware);
-echo '[!] ' . $filename . PHP_EOL;
+file_put_contents($filename . '.bin', $malware);
+echo '[!] ' . $filename . '.bin' . PHP_EOL;
