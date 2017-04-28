@@ -35,3 +35,6 @@ $ php main.php eitest rig http://2watchmygf.com
 $ file 2017-04-26_06-19-14.bin
 2017-04-26_06-19-14.bin: PE32 executable for MS Windows (GUI) Intel 80386 32-bit
 ```
+
+## LICENSE
+```mal_getter``` is open-sourced software licensed under the [MIT License](LICENSE)
