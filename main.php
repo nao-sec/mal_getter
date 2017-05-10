@@ -13,7 +13,7 @@ $campaign = strtolower($argv[1]);
 $ek = strtolower($argv[2]);
 $url = $argv[3];
 
-if($campaign !== 'eitest' && $campaign !== 'goodman')
+if($campaign !== 'eitest' && $campaign !== 'goodman' && $campaign !== 'decimal')
 {
     echo $argv[0] . ' Undefined Campaign' . PHP_EOL;
     exit(-1);
@@ -50,6 +50,12 @@ if($campaign === 'eitest')
 if($campaign === 'goodman')
 {
     $url = explode('\'', explode('iframe src=\'', $html)[1])[0];
+}
+
+// Decimal
+if($campaign === 'decimal')
+{
+    $url = explode('"', explode('iframe src="', $html)[1])[0];
 }
 
 echo '[*] ' . $url . PHP_EOL;
