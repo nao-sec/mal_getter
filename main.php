@@ -76,12 +76,22 @@ $html = $response['body'] . '';
 file_put_contents($filename . '_1.html', $html);
 
 $html = explode("\n", $html);
+
+// IE 6
 $js[0][0] = substr(trim($html[3]), 34);
 $js[0][1] = substr(trim($html[4]), 12);
 $js[1][0] = substr(trim($html[10]), 27);
 $js[1][1] = substr(trim($html[11]), 12);
 $js[2][0] = substr(trim($html[17]), 27);
 $js[2][1] = substr(trim($html[18]), 12);
+
+// IE 8
+// $js[0][0] = substr(trim($html[5]), 27);
+// $js[0][1] = substr(trim($html[6]), 12);
+// $js[1][0] = substr(trim($html[10]), 27);
+// $js[1][1] = substr(trim($html[11]), 12);
+// $js[2][0] = substr(trim($html[15]), 27);
+// $js[2][1] = substr(trim($html[16]), 12);
 
 $split[0][0] = substr($js[0][0], -4, 1);
 $split[0][1] = substr($js[0][1], -4, 1);

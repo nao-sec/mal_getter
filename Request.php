@@ -20,7 +20,12 @@ class Request
             ];
         }
 
+        // IE 8 + Windows XP
         $ua = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/7.0; rv:11.0; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.04506.648)';
+
+        // IE 10 + Windows 8
+        // $ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)';
+
         $ref = $url;
 
         $client = new Client(['verify' => false]);
