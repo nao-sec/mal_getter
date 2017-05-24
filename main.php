@@ -78,7 +78,7 @@ file_put_contents($filename . '_1.html', $html);
 $url = explode("'", explode("var NormalURL = '", $html)[1])[0];
 
 $response = Request::post($url, $old_url);
-if($reponse['status'] < 200 || $response['status'] >= 400)
+if($response['status'] < 200 || $response['status'] >= 400)
 {
     echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
     exit(-1);
