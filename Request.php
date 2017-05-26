@@ -20,9 +20,7 @@ class Request
             ];
         }
 
-        // IE 10 + Windows 8
         $ua = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)';
-
         $ref = $url;
 
         $client = new Client(['verify' => false]);
@@ -91,7 +89,6 @@ class Request
         }
 
         $ua = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)';
-
         $ref = $url;
 
         $client = new Client(['verify' => false]);
