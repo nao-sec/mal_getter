@@ -194,7 +194,7 @@ for($i=0; $i<count($code); $i++)
 
 echo '[*] ' . $url . PHP_EOL;
 
-$malware = Request::get($url, null);
+$malware = Request::get($url, $old_url);
 $malware = $malware['body'];
 
 $key = 'gexywoaxor';
