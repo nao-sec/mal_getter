@@ -27,7 +27,7 @@ if($ek !== 'rig')
 
 $filename = date('Y-m-d_H-i-s');
 
-echo '[*] ' . $url . PHP_EOL;
+echo '[+] ' . $url . PHP_EOL;
 $response = Request::get($url);
 if($response['status'] < 200 || $response['status'] >= 400)
 {
@@ -65,7 +65,7 @@ if($campaign === 'seamless')
     $url = explode('"', explode('src="', $html)[1])[0];
 }
 
-echo '[*] ' . $url . PHP_EOL;
+echo '[+] ' . $url . PHP_EOL;
 
 $response = Request::get($url, $old_url);
 if($response['status'] < 200 || $response['status'] >= 400)
@@ -192,8 +192,9 @@ for($i=0; $i<count($code); $i++)
     }
 }
 
-echo '[*] ' . $url . PHP_EOL;
+echo '[+] ' . $url . PHP_EOL;
 
+echo '[+] Waiting';
 for($i=0; $i<5; $i++)
 {
     echo '.';
