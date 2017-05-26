@@ -210,7 +210,22 @@ $malware = $malware['body'];
 if($malware == null)
 {
     echo '[!] NULL Response...' . PHP_EOL;
-    exit(-1);
+
+    echo '[+] Retrying';
+    for($i=0; $i<10; $i++)
+    {
+        echo '.';
+        sleep(1);
+    }
+    echo PHP_EOL;
+    
+    $malware = Request::get($url, null);
+    $malware = $malware['body'];
+
+    if($malware == null)
+    {
+        echo '[!] Failed...' . PHP_EOL;
+    }
 }
 
 $key = 'gexywoaxor';
