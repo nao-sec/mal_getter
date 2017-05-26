@@ -87,29 +87,50 @@ if($response['status'] < 200 || $response['status'] >= 400)
 $html = $response['body'] . '';
 file_put_contents($filename . '_2.html', $html);
 
-$html = explode("\n", $html);
+$full_html = explode("\n", $html);
+$html = [];
 
-// IE 8 + Windows XP
-$js[0][0] = substr(trim($html[3]), 34);
-$js[0][1] = substr(trim($html[4]), 12);
-$js[1][0] = substr(trim($html[10]), 27);
-$js[1][1] = substr(trim($html[11]), 12);
-$js[2][0] = substr(trim($html[17]), 27);
-$js[2][1] = substr(trim($html[18]), 12);
+for($i=0; $i<count($full_html); $i++)
+{
+    if(strlen($full_html[$i]) > 100)
+    {
+        $tmp = $full_html[$i];
+        $tmp = str_replace('</head>', '', $tmp);
+        $tmp = str_replace('<body>', '', $tmp);
+        $tmp = str_replace('<script>', '', $tmp);
+        $tmp = str_replace('</script>', '', $tmp);
+        $tmp = str_replace('</hl>', '', $tmp);
+        $html[] = trim($tmp);
+    }
+}
 
-$split[0][0] = substr($js[0][0], -4, 1);
-$split[0][1] = substr($js[0][1], -4, 1);
-$split[1][0] = substr($js[1][0], -4, 1);
-$split[1][1] = substr($js[1][1], -4, 1);
-$split[2][0] = substr($js[2][0], -4, 1);
-$split[2][1] = substr($js[2][1], -4, 1);
+$block_count = count($html) / 3;
 
-$js[0][0] = substr($js[0][0], 0, -22);
-$js[0][1] = substr($js[0][1], 0, -22);
-$js[1][0] = substr($js[1][0], 0, -22);
-$js[1][1] = substr($js[1][1], 0, -22);
-$js[2][0] = substr($js[2][0], 0, -22);
-$js[2][1] = substr($js[2][1], 0, -22);
+$js = [];
+for($i=0; $i<$block_count; $i++)
+{
+    for($j=0; $j<2; $j++)
+    {
+        $js[$i][$j] = substr(trim($html[$i*3 + $j]), 12);
+    }
+}
+
+$split = [];
+for($i=0; $i<$block_count; $i++)
+{
+    for($j=0; $j<2; $j++)
+    {
+        $split[$i][$j] = substr($js[$i][$j], -4, 1);
+    }
+}
+
+for($i=0; $i<$block_count; $i++)
+{
+    for($j=0; $j<2; $j++)
+    {
+        $js[$i][$j] = substr($js[$i][$j], 0, -22);
+    }
+}
 
 $code = [];
 for($i=0; $i<count($js); $i++)
