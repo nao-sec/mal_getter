@@ -25,7 +25,8 @@ if($ek !== 'rig')
     exit(-1);
 }
 
-$filename = date('Y-m-d_H-i-s');
+$dir = getcwd() . '/' . date('Y-m-d_H-i-s') . '/';
+mkdir($dir);
 
 echo '[+] ' . $url . PHP_EOL;
 $response = Request::get($url);
@@ -35,7 +36,7 @@ if($response['status'] < 200 || $response['status'] >= 400)
     exit(-1);
 }
 $html = $response['body'] . '';
-file_put_contents($filename . '_0.html', $html);
+file_put_contents($dir . '0.html', $html);
 $old_url = $url;
 
 // EITest
@@ -74,7 +75,7 @@ if($response['status'] < 200 || $response['status'] >= 400)
     exit(-1);
 }
 $html = $response['body'] . '';
-file_put_contents($filename . '_1.html', $html);
+file_put_contents($dir . '1.html', $html);
 
 $url = explode("'", explode("var NormalURL = '", $html)[1])[0];
 echo '[+] ' . $url . PHP_EOL;
@@ -86,7 +87,7 @@ if($response['status'] < 200 || $response['status'] >= 400)
     exit(-1);
 }
 $html = $response['body'] . '';
-file_put_contents($filename . '_2.html', $html);
+file_put_contents($dir . '2.html', $html);
 
 $full_html = explode("\n", $html);
 $html = [];
@@ -178,7 +179,7 @@ for($i=0; $i<count($code); $i++)
 
 for($i=0; $i<count($code); $i++)
 {
-    file_put_contents($filename . '_3_' . $i . '.txt', $code[$i]);
+    file_put_contents($dir . '3_' . $i . '.txt', $code[$i]);
 }
 
 for($i=0; $i<count($code); $i++)
@@ -209,5 +210,6 @@ $malware = $malware['body'];
 $key = 'gexywoaxor';
 $malware = RC4::calc($malware, $key);
 
-file_put_contents($filename . '.bin', $malware);
-echo '[!] ' . $filename . '.bin' . PHP_EOL;
+$md5 = md5($malware);
+file_put_contents($dir . $md5 . '.bin', $malware);
+echo '[!] ' . $md5 . '.bin' . PHP_EOL;
