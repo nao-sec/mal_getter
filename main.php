@@ -200,7 +200,7 @@ echo '[+] Waiting';
 for($i=0; $i<10; $i++)
 {
     echo '.';
-    sleep(1);
+    sleep(2);
 }
 echo PHP_EOL;
 
