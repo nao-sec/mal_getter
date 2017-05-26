@@ -41,7 +41,8 @@ $old_url = $url;
 // EITest
 if($campaign === 'eitest')
 {
-    $url = explode(' = "http://', $html)[1];
+    $latter = explode('= "iframe"', $html)[1];
+    $url = explode(' = "http://', $latter)[1];
     $url = explode('";', $url)[0];
     $url = 'http://' . $url;
 }
