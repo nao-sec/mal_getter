@@ -194,6 +194,13 @@ for($i=0; $i<count($code); $i++)
 
 echo '[*] ' . $url . PHP_EOL;
 
+for($i=0; $i<10; $i++)
+{
+    echo '.';
+    sleep(1);
+}
+echo PHP_EOL;
+
 $malware = Request::get($url, $old_url);
 $malware = $malware['body'];
 
