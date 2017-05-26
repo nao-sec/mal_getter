@@ -156,7 +156,9 @@ for($i=0; $i<count($code); $i++)
 
 for($i=0; $i<count($code); $i++)
 {
-    if(substr_count($code[$i], 'http://') == 1)
+    file_put_contents($filename . '_3_' . $i . '.txt', $code[$i]);
+
+    if(substr_count($code[$i], 'http://') === 1)
     {
         $old_url = $url;
         preg_match_all('/"http:\/\/.+"/', $code[$i], $url);
