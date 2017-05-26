@@ -178,7 +178,10 @@ for($i=0; $i<count($code); $i++)
 for($i=0; $i<count($code); $i++)
 {
     file_put_contents($filename . '_3_' . $i . '.txt', $code[$i]);
+}
 
+for($i=0; $i<count($code); $i++)
+{
     if(substr_count($code[$i], 'http://') === 1)
     {
         $old_url = $url;
@@ -191,7 +194,7 @@ for($i=0; $i<count($code); $i++)
 
 echo '[*] ' . $url . PHP_EOL;
 
-$malware = Request::get($url, $old_url);
+$malware = Request::get($url, null);
 $malware = $malware['body'];
 
 $key = 'gexywoaxor';
