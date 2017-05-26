@@ -194,7 +194,7 @@ for($i=0; $i<count($code); $i++)
 
 echo '[*] ' . $url . PHP_EOL;
 
-for($i=0; $i<10; $i++)
+for($i=0; $i<5; $i++)
 {
     echo '.';
     sleep(1);
