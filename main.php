@@ -12,6 +12,7 @@ if($argc < 4)
 $campaign = strtolower($argv[1]);
 $ek = strtolower($argv[2]);
 $url = $argv[3];
+$count = 0;
 
 if($campaign !== 'eitest' && $campaign !== 'goodman' && $campaign !== 'decimal' && $campaign !== 'seamless')
 {
@@ -36,7 +37,8 @@ if($response['status'] < 200 || $response['status'] >= 400)
     exit(-1);
 }
 $html = $response['body'] . '';
-file_put_contents($dir . '0.html', $html);
+file_put_contents($dir . $count . '.html', $html);
+$count++;
 $old_url = $url;
 
 // EITest
@@ -74,20 +76,22 @@ if($response['status'] < 200 || $response['status'] >= 400)
     echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
     exit(-1);
 }
-$html = $response['body'] . '';
-file_put_contents($dir . '1.html', $html);
+// $html = $response['body'] . '';
+// file_put_contents($dir . $count . '.html', $html);
+// $count++;
 
-$url = explode("'", explode("var NormalURL = '", $html)[1])[0];
-echo '[+] ' . $url . PHP_EOL;
+// $url = explode("'", explode("var NormalURL = '", $html)[1])[0];
+// echo '[+] ' . $url . PHP_EOL;
 
-$response = Request::post($url, $old_url);
-if($response['status'] < 200 || $response['status'] >= 400)
-{
-    echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
-    exit(-1);
-}
+// $response = Request::post($url, $old_url);
+// if($response['status'] < 200 || $response['status'] >= 400)
+// {
+//     echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
+//     exit(-1);
+// }
 $html = $response['body'] . '';
-file_put_contents($dir . '2.html', $html);
+file_put_contents($dir . $count . '.html', $html);
+$count++;
 
 $full_html = explode("\n", $html);
 $html = [];
@@ -179,7 +183,7 @@ for($i=0; $i<count($code); $i++)
 
 for($i=0; $i<count($code); $i++)
 {
-    file_put_contents($dir . '3_' . $i . '.txt', $code[$i]);
+    file_put_contents($dir . $count . '_' . $i . '.txt', $code[$i]);
 }
 
 for($i=0; $i<count($code); $i++)
