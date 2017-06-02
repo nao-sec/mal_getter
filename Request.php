@@ -8,6 +8,8 @@ use Guzzle\Plugin\History\HistoryPlugin;
 
 class Request
 {
+    private static $ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)';
+
     public static function get(string $url, string $ref=null) : array
     {
         if(!is_string($url) || strlen($url) == 0)
@@ -20,7 +22,6 @@ class Request
             ];
         }
 
-        $ua = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)';
         $ref = $url;
 
         $client = new Client(['verify' => false]);
@@ -33,7 +34,7 @@ class Request
                 [
                     'headers'   =>
                     [
-                        'User-Agent'    =>  $ua,
+                        'User-Agent'    =>  Request::$ua,
                         'Referer'       =>  $ref
                     ],
                     'timeout'   =>  5
@@ -88,7 +89,6 @@ class Request
             ];
         }
 
-        $ua = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)';
         $ref = $url;
 
         $client = new Client(['verify' => false]);
@@ -101,7 +101,7 @@ class Request
                 [
                     'headers'   =>
                     [
-                        'User-Agent'    =>  $ua,
+                        'User-Agent'    =>  Request::$ua,
                         'Referer'       =>  $ref
                     ],
                     'timeout'   =>  5
