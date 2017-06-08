@@ -30,16 +30,19 @@ $dir = getcwd() . '/' . date('Y-m-d_H-i-s') . '/';
 mkdir($dir);
 
 echo '[+] ' . $url . PHP_EOL;
-$response = Request::get($url);
-if($response['status'] < 200 || $response['status'] >= 400)
+if($campaign !== 'seamless')
 {
-    echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
-    exit(-1);
+    $response = Request::get($url);
+    if($response['status'] < 200 || $response['status'] >= 400)
+    {
+        echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
+        exit(-1);
+    }
+    $html = $response['body'] . '';
+    file_put_contents($dir . $count . '.html', $html);
+    $count++;
+    $old_url = $url;
 }
-$html = $response['body'] . '';
-file_put_contents($dir . $count . '.html', $html);
-$count++;
-$old_url = $url;
 
 // EITest
 if($campaign === 'eitest')
@@ -65,7 +68,8 @@ if($campaign === 'decimal')
 // Seamless
 if($campaign === 'seamless')
 {
-    $url = explode('"', explode('src="', $html)[1])[0];
+    // $url = explode('"', explode('src="', $html)[1])[0];
+    $url = Request::extract($url);
 }
 
 echo '[+] ' . $url . PHP_EOL;

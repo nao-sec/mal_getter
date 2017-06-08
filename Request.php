@@ -143,4 +143,22 @@ class Request
             ];
         }
     }
+
+    public static function extract(string $url)
+    {
+        $curl = curl_init($url);
+        $options =
+        [
+            CURLOPT_USERAGENT => Request::$ua,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_HTTPGET => true,
+            CURLOPT_RETURNTRANSFER => true
+        ];
+        curl_setopt_array($curl, $options);
+        $response = curl_exec($curl);
+        $headers = curl_getinfo($curl);
+        $url = $headers['redirect_url'];
+
+        return $url;
+    }
 }
