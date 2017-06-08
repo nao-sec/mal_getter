@@ -15,7 +15,7 @@ $url = $argv[3];
 $old_url = $url;
 $count = 0;
 
-if($campaign !== 'eitest' && $campaign !== 'goodman' && $campaign !== 'decimal' && $campaign !== 'seamless')
+if($campaign !== 'eitest' && $campaign !== 'goodman' && $campaign !== 'decimal' && $campaign !== 'seamless' && $campaign !== 'etc')
 {
     echo $argv[0] . ' Undefined Campaign' . PHP_EOL;
     exit(-1);
@@ -71,6 +71,12 @@ if($campaign === 'seamless')
 {
     // $url = explode('"', explode('src="', $html)[1])[0];
     $url = Request::extract($url);
+}
+
+// etc
+if($campaign === 'etc')
+{
+    $url = explode('"', explode('iframe src="', $html)[1])[0];
 }
 
 echo '[+] ' . $url . PHP_EOL;
