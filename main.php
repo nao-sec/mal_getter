@@ -183,8 +183,8 @@ for($i=0; $i<count($js); $i++)
 for($i=0; $i<count($code); $i++)
 {
     $code[$i] = preg_replace("/[^\x20-\x7E]/", " ", $code[$i]);
-    $code[$i] = preg_replace('/\s{2,}/', '', $code[$i]);
     $code[$i] = preg_replace('/\/\*.*\*\//', '', $code[$i]);
+    $code[$i] = preg_replace('/\s{2,}/', '', $code[$i]);
     $code[$i] = explode('var s = "', $code[$i])[1];
     $code[$i] = explode('";var e={}', $code[$i])[0];
     $code[$i] = base64_decode($code[$i]);
