@@ -182,7 +182,7 @@ for($i=0; $i<count($js); $i++)
 
 for($i=0; $i<count($code); $i++)
 {
-    file_put_contents('code_' . $i . '.log', $code[$i]);
+    file_put_contents($dir . 'code_' . $i . '.log', $code[$i]);
 }
 
 for($i=0; $i<count($code); $i++)
