@@ -12,6 +12,7 @@ if($argc < 4)
 $campaign = strtolower($argv[1]);
 $ek = strtolower($argv[2]);
 $url = $argv[3];
+$old_url = $url;
 $count = 0;
 
 if($campaign !== 'eitest' && $campaign !== 'goodman' && $campaign !== 'decimal' && $campaign !== 'seamless')
@@ -109,7 +110,10 @@ for($i=0; $i<count($full_html); $i++)
         $tmp = str_replace('<body>', '', $tmp);
         $tmp = str_replace('<script>', '', $tmp);
         $tmp = str_replace('</script>', '', $tmp);
+        $tmp = str_replace('<hl>', '', $tmp);
         $tmp = str_replace('</hl>', '', $tmp);
+        $tmp = str_replace('</body>', '', $tmp);
+        $tmp = str_replace('</html>', '', $tmp);
         $html[] = trim($tmp);
     }
 }
@@ -180,6 +184,7 @@ for($i=0; $i<count($code); $i++)
 {
     $code[$i] = preg_replace("/[^\x20-\x7E]/", " ", $code[$i]);
     $code[$i] = preg_replace('/\s{2,}/', '', $code[$i]);
+    $code[$i] = preg_replace('/\/\*.*\*\//', '', $code[$i]);
     $code[$i] = explode('var s = "', $code[$i])[1];
     $code[$i] = explode('";var e={}', $code[$i])[0];
     $code[$i] = base64_decode($code[$i]);
