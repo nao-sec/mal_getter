@@ -182,6 +182,11 @@ for($i=0; $i<count($js); $i++)
 
 for($i=0; $i<count($code); $i++)
 {
+    file_put_contents('code_' . $i . '.log', $code[$i]);
+}
+
+for($i=0; $i<count($code); $i++)
+{
     $code[$i] = preg_replace("/[^\x20-\x7E]/", " ", $code[$i]);
     $code[$i] = preg_replace('/\s{2,}/', '', $code[$i]);
     $code[$i] = explode('var s = ', $code[$i])[1];
