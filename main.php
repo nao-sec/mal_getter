@@ -236,10 +236,10 @@ for($i=0; $i<count($code); $i++)
 echo '[+] ' . $url . PHP_EOL;
 
 echo '[+] Waiting';
-for($i=0; $i<10; $i++)
+for($i=0; $i<5; $i++)
 {
     echo '.';
-    sleep(2);
+    sleep(1);
 }
 echo PHP_EOL;
 
@@ -251,7 +251,7 @@ if($malware == null)
     echo '[!] NULL Response...' . PHP_EOL;
 
     echo '[+] Retrying';
-    for($i=0; $i<10; $i++)
+    for($i=0; $i<5; $i++)
     {
         echo '.';
         sleep(1);
