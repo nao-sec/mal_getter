@@ -15,7 +15,15 @@ $url = $argv[3];
 $old_url = $url;
 $count = 0;
 
-if($campaign !== 'eitest' && $campaign !== 'goodman' && $campaign !== 'decimal' && $campaign !== 'seamless' && $campaign !== 'etc')
+if
+(
+    $campaign !== 'eitest' &&
+    $campaign !== 'goodman' &&
+    $campaign !== 'decimal' &&
+    $campaign !== 'seamless' &&
+    $campaign !== 'despicable' &&
+    $campaign !== 'etc'
+)
 {
     echo $argv[0] . ' Undefined Campaign' . PHP_EOL;
     exit(-1);
@@ -31,7 +39,7 @@ $dir = getcwd() . '/' . date('Y-m-d_H-i-s') . '/';
 mkdir($dir);
 
 echo '[+] ' . $url . PHP_EOL;
-if($campaign !== 'seamless')
+if($campaign !== 'seamless' && $campaign !== 'despicable')
 {
     $response = Request::get($url);
     if($response['status'] < 200 || $response['status'] >= 400)
@@ -70,6 +78,12 @@ if($campaign === 'decimal')
 if($campaign === 'seamless')
 {
     // $url = explode('"', explode('src="', $html)[1])[0];
+    $url = Request::extract($url);
+}
+
+// Despicable
+if($campaign === 'despicable')
+{
     $url = Request::extract($url);
 }
 
