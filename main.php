@@ -22,6 +22,7 @@ if
     $campaign !== 'decimal' &&
     $campaign !== 'seamless' &&
     $campaign !== 'despicable' &&
+    $campaign !== 'afu' &&
     $campaign !== 'etc'
 )
 {
@@ -85,6 +86,12 @@ if($campaign === 'seamless')
 if($campaign === 'despicable')
 {
     $url = Request::extract($url);
+}
+
+// afu
+if($campaign === 'afu')
+{
+    $url = explode("'", explode("URL='", $html)[1])[0];
 }
 
 // etc
