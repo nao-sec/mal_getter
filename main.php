@@ -108,19 +108,19 @@ if($response['status'] < 200 || $response['status'] >= 400)
     echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
     exit(-1);
 }
-// $html = $response['body'] . '';
-// file_put_contents($dir . $count . '.html', $html);
-// $count++;
+$html = $response['body'] . '';
+file_put_contents($dir . $count . '.html', $html);
+$count++;
 
-// $url = explode("'", explode("var NormalURL = '", $html)[1])[0];
-// echo '[+] ' . $url . PHP_EOL;
+$url = explode("'", explode("var LinkToUrl = '", $html)[1])[0];
+echo '[+] ' . $url . PHP_EOL;
 
-// $response = Request::post($url, $old_url);
-// if($response['status'] < 200 || $response['status'] >= 400)
-// {
-//     echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
-//     exit(-1);
-// }
+$response = Request::post($url, $old_url);
+if($response['status'] < 200 || $response['status'] >= 400)
+{
+    echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
+    exit(-1);
+}
 $html = $response['body'] . '';
 file_put_contents($dir . $count . '.html', $html);
 $count++;
