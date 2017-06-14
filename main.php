@@ -112,7 +112,7 @@ $html = $response['body'] . '';
 file_put_contents($dir . $count . '.html', $html);
 $count++;
 
-$url = explode("'", explode("var LinkToUrl = '", $html)[1])[0];
+$url = explode("'", explode("var NormalURL = '", $html)[1])[0];
 echo '[+] ' . $url . PHP_EOL;
 
 $response = Request::post($url, $old_url);
@@ -125,6 +125,8 @@ $html = $response['body'] . '';
 file_put_contents($dir . $count . '.html', $html);
 $count++;
 
+$html = str_replace('<script>', "\n", $html);
+$html = str_replace('</script>', "\n", $html);
 $full_html = explode("\n", $html);
 $html = [];
 
