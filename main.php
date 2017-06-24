@@ -23,6 +23,7 @@ if
     $campaign !== 'seamless' &&
     $campaign !== 'despicable' &&
     $campaign !== 'afu' &&
+    $campaign !== 'roughted' &&
     $campaign !== 'etc'
 )
 {
@@ -40,7 +41,7 @@ $dir = getcwd() . '/' . date('Y-m-d_H-i-s') . '/';
 mkdir($dir);
 
 echo '[+] ' . $url . PHP_EOL;
-if($campaign !== 'seamless' && $campaign !== 'despicable')
+if($campaign !== 'despicable' && $campaign !== 'roughted')
 {
     $response = Request::get($url);
     if($response['status'] < 200 || $response['status'] >= 400)
@@ -78,8 +79,8 @@ if($campaign === 'decimal')
 // Seamless
 if($campaign === 'seamless')
 {
-    // $url = explode('"', explode('src="', $html)[1])[0];
-    $url = Request::extract($url);
+    $url = explode('"', explode('src="', $html)[1])[0];
+    // $url = Request::extract($url);
 }
 
 // Despicable
@@ -92,6 +93,16 @@ if($campaign === 'despicable')
 if($campaign === 'afu')
 {
     $url = explode("'", explode("URL='", $html)[1])[0];
+}
+
+// roughted
+if($campaign === 'roughted')
+{
+    $referer = 'http://pejino.com';
+    $response = Request::get($url, $referer);
+    $html = $response['body'] . '';
+    $url = explode('"', explode('src="', $html)[1])[0];
+    $old_url = $referer;
 }
 
 // etc
@@ -114,16 +125,6 @@ $count++;
 
 $url = explode("'", explode("var NormalURL = '", $html)[1])[0];
 echo '[+] ' . $url . PHP_EOL;
-
-$response = Request::post($url, $old_url);
-if($response['status'] < 200 || $response['status'] >= 400)
-{
-    echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
-    exit(-1);
-}
-$html = $response['body'] . '';
-file_put_contents($dir . $count . '.html', $html);
-$count++;
 
 $html = str_replace('<script>', "\n", $html);
 $html = str_replace('</script>', "\n", $html);
@@ -225,7 +226,7 @@ for($i=0; $i<count($code); $i++)
 
 for($i=0; $i<count($code); $i++)
 {
-    if(substr_count($code[$i], 'http://') === 1)
+    if(substr_count($code[$i], 'http://') >= 1)
     {
         $old_url = $url;
         preg_match_all('/"http:\/\/.+"/', $code[$i], $url);
