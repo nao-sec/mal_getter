@@ -22,7 +22,10 @@ class Request
             ];
         }
 
-        $ref = $url;
+        if($ref == null)
+        {
+            $ref = $url;
+        }
 
         $client = new Client(['verify' => false]);
         try
