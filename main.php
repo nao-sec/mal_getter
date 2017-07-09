@@ -41,7 +41,7 @@ $dir = getcwd() . '/' . date('Y-m-d_H-i-s') . '/';
 mkdir($dir);
 
 echo '[+] ' . $url . PHP_EOL;
-if($campaign !== 'despicable' && $campaign !== 'roughted')
+if($campaign !== 'despicable' && $campaign !== 'roughted' && $campaign !== 'etc')
 {
     $response = Request::get($url);
     if($response['status'] < 200 || $response['status'] >= 400)
@@ -108,7 +108,7 @@ if($campaign === 'roughted')
 // etc
 if($campaign === 'etc')
 {
-    $url = explode('"', explode('iframe src="', $html)[1])[0];
+    // $url = explode('"', explode('iframe src="', $html)[1])[0];
 }
 
 echo '[+] ' . $url . PHP_EOL;
@@ -122,9 +122,6 @@ if($response['status'] < 200 || $response['status'] >= 400)
 $html = $response['body'] . '';
 file_put_contents($dir . $count . '.html', $html);
 $count++;
-
-$url = explode("'", explode("var NormalURL = '", $html)[1])[0];
-echo '[+] ' . $url . PHP_EOL;
 
 $html = str_replace('<script>', "\n", $html);
 $html = str_replace('</script>', "\n", $html);
