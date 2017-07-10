@@ -270,6 +270,6 @@ if($malware == null)
 $key = 'gexywoaxor';
 $malware = RC4::calc($malware, $key);
 
-$md5 = md5($malware);
-file_put_contents($dir . $md5 . '.bin', $malware);
-echo '[!] ' . $md5 . '.bin' . PHP_EOL;
+$sha256 = hash('sha256', $malware);
+file_put_contents($dir . $sha256 . '.bin', $malware);
+echo '[!] ' . $sha256 . '.bin' . PHP_EOL;
