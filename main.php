@@ -153,6 +153,18 @@ for($i=0; $i<$block_count; $i++)
     for($j=0; $j<2; $j++)
     {
         $js[$i][$j] = substr(trim($html[$i*3 + $j]), 12);
+        preg_match_all('/\/\*[0-9a-zA-Z]{1,32}\*\//', $js[$i][$j], $matches);
+        if(count($matches) > 0)
+        {
+            $matches = $matches[0];
+            if(count($matches) > 0)
+            {
+                for($k=0; $k<count($matches); $k++)
+                {
+                    $js[$i][$j] = str_replace($matches[$k], '', $js[$i][$j]);
+                }
+            }
+        }
     }
 }
 
