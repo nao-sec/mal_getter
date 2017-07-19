@@ -141,7 +141,11 @@ for($i=0; $i<count($full_html); $i++)
         $tmp = str_replace('</hl>', '', $tmp);
         $tmp = str_replace('</body>', '', $tmp);
         $tmp = str_replace('</html>', '', $tmp);
-        $html[] = trim($tmp);
+        $tmp = trim($tmp);
+        if(strlen($tmp) > 100)
+        {
+            $html[] = $tmp;
+        }
     }
 }
 
