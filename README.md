@@ -7,6 +7,7 @@ so the possibility that this will not work is very high.
 
 ## Require
 - PHP 7
+  - cURL
 - Composer
 
 ## Install
@@ -24,20 +25,15 @@ $ php main.php [Campaign] [EK] [Compromised URL]
 ## Example
 ```
 $ ls
-composer.json  composer.lock  main.php  RC4.php  Request.php  vendor
+Campaigns  LICENSE  README.md    Share.php      composer.lock  vendor
+EKs        RC4.php  Request.php  composer.json  main.php
 
-$ php main.php eitest rig http://wpteam.org
-[+] http://wpteam.org
-[+] http://set.212poinsettiaave.com/?oq=m3Y_PcoLbRVaFK1iECFKQIynNtfUAgRo_2thkjdzUOZ1cTX_hHZUTp1u9CcUbI&q=wXfQMvXcJwDQC4bGMvrESLtNNknQA0KK2In2_dqyEoH9eGnihNzUSkr76B2aC
-[+] http://set.212poinsettiaave.com/?oq=CEh3h_PorKLJWOFawjRGFfldmz4xdB1hB9f2u2kLdwRLJgpLXrkCJNQh1z6I&q=wH3QMvXcJwDPFYbGMvrETaNbNknQA0ePxpH2_drWdZqxKGni0-b5UUSk6Fq
-[+] http://set.212poinsettiaave.com/?oq=8PMrKrcFbFfkiBeHKAxhyYwPUA5H9KGqhkWAzEPP1ZPW_yWEaANM9pucHbcLhR32&q=z3vQMvXcJwDQDoTIMvrESLtEMU_OGUKK2OH_783VCZ_9JHT1vvHPRAPytgWCelTY
-[+] Waiting..........
-[!] 2f86aa66c9a47e942f312b4ba22a935f.bin
-
-$cd 2017-05-26_08-28-47
-
-$ file 2f86aa66c9a47e942f312b4ba22a935f.bin
-2f86aa66c9a47e942f312b4ba22a935f.bin: PE32 executable for MS Windows (GUI) Intel 80386 32-bit
+$ php main.php seamless rig http://[Deleted]/signup1.php
+[+] http://[Deleted]/signup1.php
+[+] http://188.225.33.138/?OTUxMzI0MDc=&elsa=SwdhzoxeB1hGoqv4j0DXyBfKgJWCrxeOaAtGrpDGEbMziV_3zLBHeckizheBu2BYmOgtYlsgpQhR2a_I&info=MzM3MTAwOTA=&rand=xHzQMrPYbR3FFYDfKPnEUKREMU3WA0SKwY-ZhazVF5-xFDTGpbL1Fx_spVydCFyEmvJvdLMHIwKh1UfA&shld=MzA0MTk4ODI=
+[+] http://188.225.33.138/?Njc3NjM3MTM=&info=MTMzOTY5NjU=&rand=xXzQMvWebRXQC53EKvncT6NEMVHRH0CL2YydmrHTefjaeVWkzrLFTF_xozKASASG6_JtdfJSDQOzj&elsa=0bVLgc0yo9cUFtF9amu3EPWwBWe0cSH_B3cYwhGrJuXEbg42Q_9m7MkecImzh-L6GhZxegtDxoR4g&fore=MjY3ODQwMg==
+[+] Waiting.....
+[!] 4cc6922ec861c67b29d1c60b58aa12f74540dc838e3da8cade8d3c15b308da6e.bin
 ```
 
 ## LICENSE
