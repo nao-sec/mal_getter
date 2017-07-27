@@ -10,10 +10,9 @@ class Request
 {
     private static $ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)';
 
-    public static function get(string $url, string $ref=null) : array
+    public static function get(string $url, string $ref = null) : array
     {
-        if(!is_string($url) || strlen($url) == 0)
-        {
+        if (!is_string($url) || strlen($url) == 0) {
             return
             [
                 'status'    =>  400,
@@ -22,14 +21,12 @@ class Request
             ];
         }
 
-        if($ref == null)
-        {
+        if ($ref == null) {
             $ref = $url;
         }
 
         $client = new Client(['verify' => false]);
-        try
-        {
+        try {
             $response = $client->request
             (
                 'GET',
@@ -50,27 +47,21 @@ class Request
                 'type'      =>  $response->getHeader('Content-Type'),
                 'body'      =>  $response->getBody()
             ];
-        }
-        catch(\Error $e)
-        {
+        } catch (\Error $e) {
             return
             [
                 'status'    =>  500,
                 'type'      =>  null,
                 'body'      =>  null
             ];
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             return
             [
                 'status'    =>  500,
                 'type'      =>  null,
                 'body'      =>  null
             ];
-        }
-        catch(\Throwable $t)
-        {
+        } catch (\Throwable $t) {
             return
             [
                 'status'    =>  500,
@@ -80,10 +71,9 @@ class Request
         }
     }
 
-    public static function post(string $url, string $ref=null) : array
+    public static function post(string $url, string $ref = null) : array
     {
-        if(!is_string($url) || strlen($url) == 0)
-        {
+        if (!is_string($url) || strlen($url) == 0) {
             return
             [
                 'status'    =>  400,
@@ -92,11 +82,12 @@ class Request
             ];
         }
 
-        $ref = $url;
+        if ($ref == null) {
+            $ref = $url;
+        }
 
         $client = new Client(['verify' => false]);
-        try
-        {
+        try {
             $response = $client->request
             (
                 'POST',
@@ -117,27 +108,21 @@ class Request
                 'type'      =>  $response->getHeader('Content-Type'),
                 'body'      =>  $response->getBody()
             ];
-        }
-        catch(\Error $e)
-        {
+        } catch (\Error $e) {
             return
             [
                 'status'    =>  500,
                 'type'      =>  null,
                 'body'      =>  null
             ];
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             return
             [
                 'status'    =>  500,
                 'type'      =>  null,
                 'body'      =>  null
             ];
-        }
-        catch(\Throwable $t)
-        {
+        } catch (\Throwable $t) {
             return
             [
                 'status'    =>  500,

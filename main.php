@@ -1,291 +1,53 @@
 <?php
 
-require_once 'RC4.php';
 require_once 'Request.php';
+require_once 'Share.php';
+require_once 'RC4.php';
 
-if($argc < 4)
-{
+if ($argc < 4) {
     echo $argv[0] . ' [Campaign] [EK] [URL]' . PHP_EOL;
     exit(-1);
 }
 
-$campaign = strtolower($argv[1]);
-$ek = strtolower($argv[2]);
+$campaign = ucfirst(strtolower($argv[1]));
+$ek = ucfirst(strtolower($argv[2]));
 $url = $argv[3];
 $old_url = $url;
-$count = 0;
+Share::$_['count'] = 0;
 
-if
-(
-    $campaign !== 'eitest' &&
-    $campaign !== 'goodman' &&
-    $campaign !== 'decimal' &&
-    $campaign !== 'seamless' &&
-    $campaign !== 'despicable' &&
-    $campaign !== 'afu' &&
-    $campaign !== 'roughted' &&
-    $campaign !== 'etc'
-)
-{
+$supported_campaigns = [];
+foreach (glob(getcwd() . '/Campaigns/*.php') as $file) {
+    if (is_file($file)) {
+        $supported_campaigns[] =  pathinfo($file)['filename'];
+    }
+}
+
+$supported_eks = [];
+foreach (glob(getcwd() . '/EKs/*.php') as $file) {
+    if (is_file($file)) {
+        $supported_eks[] =  pathinfo($file)['filename'];
+    }
+}
+
+if (!in_array($campaign, $supported_campaigns)) {
     echo $argv[0] . ' Undefined Campaign' . PHP_EOL;
     exit(-1);
 }
+require_once getcwd() . '/Campaigns/' . $campaign . '.php';
 
-if($ek !== 'rig')
-{
+if (!in_array($ek, $supported_eks)) {
     echo $argv[0] . ' Undefined Exploit Kit' . PHP_EOL;
     exit(-1);
 }
+require_once getcwd() . '/EKs/' . $ek . '.php';
 
-$dir = getcwd() . '/' . date('Y-m-d_H-i-s') . '/';
-mkdir($dir);
-
-echo '[+] ' . $url . PHP_EOL;
-if($campaign !== 'despicable' && $campaign !== 'roughted' && $campaign !== 'etc')
-{
-    $response = Request::get($url);
-    if($response['status'] < 200 || $response['status'] >= 400)
-    {
-        echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
-        exit(-1);
-    }
-    $html = $response['body'] . '';
-    file_put_contents($dir . $count . '.html', $html);
-    $count++;
-    $old_url = $url;
-}
-
-// EITest
-if($campaign === 'eitest')
-{
-    $latter = explode('= "iframe"', $html)[1];
-    $url = explode(' = "http://', $latter)[1];
-    $url = explode('";', $url)[0];
-    $url = 'http://' . $url;
-}
-
-// GoodMan
-if($campaign === 'goodman')
-{
-    $url = explode('\'', explode('iframe src=\'', $html)[1])[0];
-}
-
-// Decimal
-if($campaign === 'decimal')
-{
-    $url = explode('"', explode('iframe src="', $html)[1])[0];
-}
-
-// Seamless
-if($campaign === 'seamless')
-{
-    $url = explode('"', explode('src="', $html)[1])[0];
-    // $url = Request::extract($url);
-}
-
-// Despicable
-if($campaign === 'despicable')
-{
-    $url = Request::extract($url);
-}
-
-// afu
-if($campaign === 'afu')
-{
-    $url = explode("'", explode("URL='", $html)[1])[0];
-}
-
-// roughted
-if($campaign === 'roughted')
-{
-    $referer = 'http://pejino.com';
-    $response = Request::get($url, $referer);
-    $html = $response['body'] . '';
-    $url = explode('"', explode('src="', $html)[1])[0];
-    $old_url = $referer;
-}
-
-// etc
-if($campaign === 'etc')
-{
-    // $url = explode('"', explode('iframe src="', $html)[1])[0];
-}
+Share::$_['dir'] = getcwd() . '/' . date('Y-m-d_H-i-s') . '/';
+mkdir(Share::$_['dir']);
 
 echo '[+] ' . $url . PHP_EOL;
-
-$response = Request::get($url, $old_url);
-if($response['status'] < 200 || $response['status'] >= 400)
-{
-    echo '[!] HTTP Status: ' . $response['status'] . PHP_EOL;
+$ek_url = $campaign::analyze($url);
+if ($ek_url === $url) {
     exit(-1);
 }
-$html = $response['body'] . '';
-file_put_contents($dir . $count . '.html', $html);
-$count++;
-
-$html = str_replace('<script>', "\n", $html);
-$html = str_replace('</script>', "\n", $html);
-$full_html = explode("\n", $html);
-$html = [];
-
-for($i=0; $i<count($full_html); $i++)
-{
-    if(strlen($full_html[$i]) > 100)
-    {
-        $tmp = $full_html[$i];
-        $tmp = str_replace('</head>', '', $tmp);
-        $tmp = str_replace('<body>', '', $tmp);
-        $tmp = str_replace('<script>', '', $tmp);
-        $tmp = str_replace('</script>', '', $tmp);
-        $tmp = str_replace('<hl>', '', $tmp);
-        $tmp = str_replace('</hl>', '', $tmp);
-        $tmp = str_replace('</body>', '', $tmp);
-        $tmp = str_replace('</html>', '', $tmp);
-        $tmp = trim($tmp);
-        if(strlen($tmp) > 100)
-        {
-            $html[] = $tmp;
-        }
-    }
-}
-
-$block_count = count($html) / 3;
-
-$js = [];
-for($i=0; $i<$block_count; $i++)
-{
-    for($j=0; $j<2; $j++)
-    {
-        $js[$i][$j] = substr(trim($html[$i*3 + $j]), 12);
-        preg_match_all('/\/\*[0-9a-zA-Z]{1,32}\*\//', $js[$i][$j], $matches);
-        if(count($matches) > 0)
-        {
-            $matches = $matches[0];
-            if(count($matches) > 0)
-            {
-                for($k=0; $k<count($matches); $k++)
-                {
-                    $js[$i][$j] = str_replace($matches[$k], '', $js[$i][$j]);
-                }
-            }
-        }
-    }
-}
-
-$split = [];
-for($i=0; $i<$block_count; $i++)
-{
-    for($j=0; $j<2; $j++)
-    {
-        $split[$i][$j] = substr($js[$i][$j], -4, 1);
-    }
-}
-
-for($i=0; $i<$block_count; $i++)
-{
-    for($j=0; $j<2; $j++)
-    {
-        $js[$i][$j] = substr($js[$i][$j], 0, -22);
-    }
-}
-
-$code = [];
-for($i=0; $i<count($js); $i++)
-{
-    $str[0] = explode($split[$i][0], $js[$i][0]);
-    $str[1] = explode($split[$i][1], $js[$i][1]);
-
-    $code[$i] = '';
-
-    for($j=0; $j<count($str[0]); $j++)
-    {
-        $code[$i] .= $str[1][$j];
-        $code[$i] .= $str[0][count($str[0]) - $j - 1];
-    }
-
-    $pattern =
-    [
-        '.',
-        '<',
-        '>',
-        '=',
-        '"',
-        "'",
-        ')',
-        '(',
-        ' ',
-        "\t",
-        "\n"
-    ];
-    for($j=0; $j<count($pattern); $j++)
-    {
-        $code[$i] = str_replace(chr($j+1), $pattern[$j], $code[$i]);
-    }
-}
-
-for($i=0; $i<count($code); $i++)
-{
-    $code[$i] = preg_replace("/[^\x20-\x7E]/", " ", $code[$i]);
-    $code[$i] = preg_replace('/\s{2,}/', '', $code[$i]);
-    $code[$i] = explode('var s = ', $code[$i])[1];
-    $code[$i] = explode('"', $code[$i])[1];
-    $code[$i] = base64_decode($code[$i]);
-}
-
-for($i=0; $i<count($code); $i++)
-{
-    file_put_contents($dir . $count . '_' . $i . '.txt', $code[$i]);
-}
-
-for($i=0; $i<count($code); $i++)
-{
-    if(substr_count($code[$i], 'http://') >= 1)
-    {
-        $old_url = $url;
-        preg_match_all('/"http:\/\/.+"/', $code[$i], $url);
-        $url = end($url)[0];
-        $url = explode('"', $url)[1];
-        break;
-    }
-}
-
-echo '[+] ' . $url . PHP_EOL;
-
-echo '[+] Waiting';
-for($i=0; $i<5; $i++)
-{
-    echo '.';
-    sleep(1);
-}
-echo PHP_EOL;
-
-$malware = Request::get($url, null);
-$malware = $malware['body'];
-
-if($malware == null)
-{
-    echo '[!] NULL Response...' . PHP_EOL;
-
-    echo '[+] Retrying';
-    for($i=0; $i<5; $i++)
-    {
-        echo '.';
-        sleep(1);
-    }
-    echo PHP_EOL;
-    
-    $malware = Request::get($url, null);
-    $malware = $malware['body'];
-
-    if($malware == null)
-    {
-        echo '[!] Failed...' . PHP_EOL;
-    }
-}
-
-$key = 'gexywoaxor';
-$malware = RC4::calc($malware, $key);
-
-$sha256 = hash('sha256', $malware);
-file_put_contents($dir . $sha256 . '.bin', $malware);
-echo '[!] ' . $sha256 . '.bin' . PHP_EOL;
+echo '[+] ' . $ek_url . PHP_EOL;
+$ek::analyze($ek_url);
