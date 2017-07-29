@@ -133,6 +133,54 @@ class Rig
             }
         }
 
+        $key = null;
+        for($i=0; $i<count($code); $i++)
+        {
+            preg_match_all('/key=".{8,16}"/', $code[$i], $key);
+            if(count($key) > 0)
+            {
+                $key = $key[0];
+            }
+            if(count($key) > 0)
+            {
+                $key = end($key);
+                $key = explode('"', $key)[1];
+                break;
+            }
+            else
+            {
+                $key = null;
+            }
+        }
+        if($key == null)
+        {
+            for($i=0; $i<count($code); $i++)
+            {
+                preg_match_all('/",".{8,16}"\)/', $code[$i], $key);
+                if(count($key) > 0)
+                {
+                    $key = $key[0];
+                }
+                if(count($key) > 0)
+                {
+                    $key = end($key);
+                    $key = explode('"', $key)[2];
+                    break;
+                }
+                else
+                {
+                    $key = null;
+                }
+            }
+        }
+        if($key == null)
+        {
+            // $key = 'gexywoaxor';
+            // $key = 'gexykukusa';
+            $key = 'xexykukusa';
+        }
+
+        echo '[+] Key: ' . $key . PHP_EOL;
         echo '[+] ' . $url . PHP_EOL;
 
         echo '[+] Waiting';
@@ -182,10 +230,7 @@ class Rig
             }
         }
 
-        // $key = 'gexywoaxor';
-        $key = 'gexykukusa';
         $malware = RC4::calc($malware, $key);
-
         $sha256 = hash('sha256', $malware);
         file_put_contents(Share::$_['dir'] . $sha256 . '.bin', $malware);
         echo '[!] ' . $sha256 . '.bin' . PHP_EOL;
