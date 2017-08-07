@@ -15,7 +15,9 @@ class Etc
         $html = $response['body'] . '';
         file_put_contents(Share::$_['dir'] . Share::$_['count'] . '.html', $html);
         Share::$_['count']++;
-        $url = explode("\\'", explode("location = \\'", $html)[1])[0];
+        $html = str_replace("\\", "", $html);
+        $html = str_replace(' ', '', $html);
+        $url = explode("'", explode("location='", $html)[1])[0];
         return $url;
     }
 }
