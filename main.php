@@ -47,7 +47,7 @@ mkdir(Share::$_['dir']);
 echo '[+] ' . $url . PHP_EOL;
 $ek_url = $campaign::analyze($url);
 if ($ek_url === $url) {
-    echo '[!] Failed to get malware URL' . PHP_EOL;
+    echo '[!] Failed to get EK URL' . PHP_EOL;
     exit(-1);
 }
 echo '[+] ' . $ek_url . PHP_EOL;

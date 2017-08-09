@@ -8,6 +8,7 @@ class Rig
 {
     public static function analyze($url)
     {
+        $landing_url = $url;
         $ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)';
         $curl = curl_init($url);
         $options =
@@ -131,6 +132,11 @@ class Rig
                 $url = explode('"', $url)[1];
                 break;
             }
+        }
+        if($url === $landing_url)
+        {
+            echo '[!] Failed to get malware URL' . PHP_EOL;
+            exit(-1);
         }
 
         $key = null;
