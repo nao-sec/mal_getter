@@ -30,13 +30,13 @@ foreach (glob(getcwd() . '/EKs/*.php') as $file) {
 }
 
 if (!in_array($campaign, $supported_campaigns)) {
-    echo '[!] ' . $argv[0] . ' Undefined Campaign' . PHP_EOL;
+    echo $argv[0] . ' Undefined Campaign' . PHP_EOL;
     exit(-1);
 }
 require_once getcwd() . '/Campaigns/' . $campaign . '.php';
 
 if (!in_array($ek, $supported_eks)) {
-    echo '[!] ' . $argv[0] . ' Undefined Exploit Kit' . PHP_EOL;
+    echo $argv[0] . ' Undefined Exploit Kit' . PHP_EOL;
     exit(-1);
 }
 require_once getcwd() . '/EKs/' . $ek . '.php';

@@ -177,7 +177,8 @@ class Rig
         {
             // $key = 'gexywoaxor';
             // $key = 'gexykukusa';
-            $key = 'xexykukusa';
+            // $key = 'xexykukusa';
+            $key = 'wexykukusw';
         }
 
         echo '[+] Key: ' . $key . PHP_EOL;
