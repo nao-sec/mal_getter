@@ -1,7 +1,16 @@
 # mal_getter
 It is a tool for dropping malware from EK  
 
-Currently this tool can analyze EITest, GoodMan, Decimal IP, Seamless and RigEK.  
+Currently this tool can analyze
+- Decimal IP
+- Despicable
+- EITest
+- GoodMan
+- Rulan
+- Seamless
+- Rig Exploit Kit
+- Terror Exploit Kit
+
 It depends on Campaign and EK implementation,  
 so the possibility that this will not work is very high.
 
