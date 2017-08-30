@@ -45,10 +45,11 @@ Share::$_['dir'] = getcwd() . '/' . date('Y-m-d_H-i-s') . '/';
 mkdir(Share::$_['dir']);
 
 echo '[+] ' . $url . PHP_EOL;
-$ek_url = $campaign::analyze($url);
+$ek_url = ('Campaign\\' . $campaign)::analyze($url);
 if ($ek_url === $url) {
     echo '[!] Failed to get EK URL' . PHP_EOL;
     exit(-1);
 }
+Share::$_['old_url'] = $url;
 echo '[+] ' . $ek_url . PHP_EOL;
-$ek::analyze($ek_url);
+('EK\\' . $ek)::analyze($ek_url);

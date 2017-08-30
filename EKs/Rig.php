@@ -1,5 +1,7 @@
 <?php
 
+namespace EK;
+
 require_once 'Request.php';
 require_once 'Share.php';
 require_once 'RC4.php';
@@ -21,8 +23,8 @@ class Rig
         curl_setopt_array($curl, $options);
         $html = curl_exec($curl);
         curl_close($curl);
-        file_put_contents(Share::$_['dir'] . Share::$_['count'] . '.html', $html);
-        Share::$_['count']++;
+        file_put_contents(\Share::$_['dir'] . \Share::$_['count'] . '.html', $html);
+        \Share::$_['count']++;
 
         $html = str_replace('<script>', "\n", $html);
         $html = str_replace('</script>', "\n", $html);
@@ -118,7 +120,7 @@ class Rig
         }
 
         for ($i=0; $i<count($code); $i++) {
-            file_put_contents(Share::$_['dir'] . Share::$_['count'] . '_' . $i . '.txt', $code[$i]);
+            file_put_contents(\Share::$_['dir'] . \Share::$_['count'] . '_' . $i . '.txt', $code[$i]);
         }
 
         for ($i=0; $i<count($code); $i++) {
@@ -237,9 +239,9 @@ class Rig
             }
         }
 
-        $malware = RC4::calc($malware, $key);
+        $malware = \RC4::calc($malware, $key);
         $sha256 = hash('sha256', $malware);
-        file_put_contents(Share::$_['dir'] . $sha256 . '.bin', $malware);
+        file_put_contents(\Share::$_['dir'] . $sha256 . '.bin', $malware);
         echo '[!] ' . $sha256 . '.bin' . PHP_EOL;
     }
 }
