@@ -5,6 +5,7 @@ Currently this tool can analyze
 - Decimal IP
 - Despicable
 - EITest
+- Fobos
 - GoodMan
 - Rulan
 - Seamless
