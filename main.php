@@ -44,9 +44,12 @@ require_once getcwd() . '/EKs/' . $ek . '.php';
 Share::$_['dir'] = getcwd() . '/' . date('Y-m-d_H-i-s') . '/';
 mkdir(Share::$_['dir']);
 
-echo '[+] ' . $url . PHP_EOL;
+if($campaign !== 'Kaixin')
+{
+    echo '[+] ' . $url . PHP_EOL;
+}
 $ek_url = ('Campaign\\' . $campaign)::analyze($url);
-if ($ek_url === $url) {
+if ($campaign !== 'Kaixin' && $ek_url === $url) {
     echo '[!] Failed to get EK URL' . PHP_EOL;
     exit(-1);
 }
