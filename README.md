@@ -11,6 +11,7 @@ Currently this tool can analyze
 - Seamless
 - Rig Exploit Kit
 - Terror Exploit Kit
+- KaiXin Exploit Kit
 
 It depends on Campaign and EK implementation,  
 so the possibility that this will not work is very high.
