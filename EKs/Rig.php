@@ -26,94 +26,96 @@ class Rig
         file_put_contents(\Share::$_['dir'] . \Share::$_['count'] . '.html', $html);
         \Share::$_['count']++;
 
-        $html = str_replace('<script>', "\n", $html);
-        $html = str_replace('</script>', "\n", $html);
-        $full_html = explode("\n", $html);
-        $html = [];
+        // $html = str_replace('<script>', "\n", $html);
+        // $html = str_replace('</script>', "\n", $html);
+        // $full_html = explode("\n", $html);
+        // $html = [];
 
-        for ($i=0; $i<count($full_html); $i++) {
-            if (strlen($full_html[$i]) > 100) {
-                $tmp = $full_html[$i];
-                $tmp = str_replace('</head>', '', $tmp);
-                $tmp = str_replace('<body>', '', $tmp);
-                $tmp = str_replace('<script>', '', $tmp);
-                $tmp = str_replace('</script>', '', $tmp);
-                $tmp = str_replace('<hl>', '', $tmp);
-                $tmp = str_replace('</hl>', '', $tmp);
-                $tmp = str_replace('</body>', '', $tmp);
-                $tmp = str_replace('</html>', '', $tmp);
-                $tmp = trim($tmp);
-                if (strlen($tmp) > 100) {
-                    $html[] = $tmp;
-                }
-            }
-        }
+        // for ($i=0; $i<count($full_html); $i++) {
+        //     if (strlen($full_html[$i]) > 100) {
+        //         $tmp = $full_html[$i];
+        //         $tmp = str_replace('</head>', '', $tmp);
+        //         $tmp = str_replace('<body>', '', $tmp);
+        //         $tmp = str_replace('<script>', '', $tmp);
+        //         $tmp = str_replace('</script>', '', $tmp);
+        //         $tmp = str_replace('<hl>', '', $tmp);
+        //         $tmp = str_replace('</hl>', '', $tmp);
+        //         $tmp = str_replace('</body>', '', $tmp);
+        //         $tmp = str_replace('</html>', '', $tmp);
+        //         $tmp = trim($tmp);
+        //         if (strlen($tmp) > 100) {
+        //             $html[] = $tmp;
+        //         }
+        //     }
+        // }
 
-        $block_count = count($html) / 3;
+        // $block_count = count($html) / 3;
 
-        $js = [];
-        for ($i=0; $i<$block_count; $i++) {
-            for ($j=0; $j<2; $j++) {
-                $js[$i][$j] = substr(trim($html[$i*3 + $j]), 12);
-                preg_match_all('/\/\*[0-9a-zA-Z]{1,32}\*\//', $js[$i][$j], $matches);
-                if (count($matches) > 0) {
-                    $matches = $matches[0];
-                    if (count($matches) > 0) {
-                        for ($k=0; $k<count($matches); $k++) {
-                            $js[$i][$j] = str_replace($matches[$k], '', $js[$i][$j]);
-                        }
-                    }
-                }
-            }
-        }
+        // $js = [];
+        // for ($i=0; $i<$block_count; $i++) {
+        //     for ($j=0; $j<2; $j++) {
+        //         $js[$i][$j] = substr(trim($html[$i*3 + $j]), 12);
+        //         preg_match_all('/\/\*[0-9a-zA-Z]{1,32}\*\//', $js[$i][$j], $matches);
+        //         if (count($matches) > 0) {
+        //             $matches = $matches[0];
+        //             if (count($matches) > 0) {
+        //                 for ($k=0; $k<count($matches); $k++) {
+        //                     $js[$i][$j] = str_replace($matches[$k], '', $js[$i][$j]);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
-        $split = [];
-        for ($i=0; $i<$block_count; $i++) {
-            for ($j=0; $j<2; $j++) {
-                $split[$i][$j] = substr($js[$i][$j], -4, 1);
-            }
-        }
+        // $split = [];
+        // for ($i=0; $i<$block_count; $i++) {
+        //     for ($j=0; $j<2; $j++) {
+        //         $split[$i][$j] = substr($js[$i][$j], -4, 1);
+        //     }
+        // }
 
-        for ($i=0; $i<$block_count; $i++) {
-            for ($j=0; $j<2; $j++) {
-                $js[$i][$j] = substr($js[$i][$j], 0, -22);
-            }
-        }
+        // for ($i=0; $i<$block_count; $i++) {
+        //     for ($j=0; $j<2; $j++) {
+        //         $js[$i][$j] = substr($js[$i][$j], 0, -22);
+        //     }
+        // }
 
-        $code = [];
-        for ($i=0; $i<count($js); $i++) {
-            $str[0] = explode($split[$i][0], $js[$i][0]);
-            $str[1] = explode($split[$i][1], $js[$i][1]);
+        // $code = [];
+        // for ($i=0; $i<count($js); $i++) {
+        //     $str[0] = explode($split[$i][0], $js[$i][0]);
+        //     $str[1] = explode($split[$i][1], $js[$i][1]);
 
-            $code[$i] = '';
+        //     $code[$i] = '';
 
-            for ($j=0; $j<count($str[0]); $j++) {
-                $code[$i] .= $str[1][$j];
-                $code[$i] .= $str[0][count($str[0]) - $j - 1];
-            }
+        //     for ($j=0; $j<count($str[0]); $j++) {
+        //         $code[$i] .= $str[1][$j];
+        //         $code[$i] .= $str[0][count($str[0]) - $j - 1];
+        //     }
 
-            $pattern =
-            [
-                '.',
-                '<',
-                '>',
-                '=',
-                '"',
-                "'",
-                ')',
-                '(',
-                ' ',
-                "\t",
-                "\n"
-            ];
-            for ($j=0; $j<count($pattern); $j++) {
-                $code[$i] = str_replace(chr($j+1), $pattern[$j], $code[$i]);
-            }
-        }
+        //     $pattern =
+        //     [
+        //         '.',
+        //         '<',
+        //         '>',
+        //         '=',
+        //         '"',
+        //         "'",
+        //         ')',
+        //         '(',
+        //         ' ',
+        //         "\t",
+        //         "\n"
+        //     ];
+        //     for ($j=0; $j<count($pattern); $j++) {
+        //         $code[$i] = str_replace(chr($j+1), $pattern[$j], $code[$i]);
+        //     }
+        // }
+
+        $code = explode('<script>', $html);
+        unset($code[0]);
+        $code = array_values($code);
 
         for ($i=0; $i<count($code); $i++) {
-            $code[$i] = preg_replace("/[^\x20-\x7E]/", " ", $code[$i]);
-            $code[$i] = preg_replace('/\s{2,}/', '', $code[$i]);
             $code[$i] = explode('var s = ', $code[$i])[1];
             $code[$i] = explode('"', $code[$i])[1];
             $code[$i] = base64_decode($code[$i]);
