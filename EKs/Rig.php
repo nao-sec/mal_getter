@@ -146,7 +146,7 @@ class Rig
         $key = null;
         for($i=0; $i<count($code); $i++)
         {
-            preg_match_all('/key=".{8,16}"/', $code[$i], $key);
+            preg_match_all('/key=".{8,32}"/', $code[$i], $key);
             if(count($key) > 0)
             {
                 $key = $key[0];
