@@ -132,7 +132,7 @@ class Rig
         [
             CURLOPT_USERAGENT => $ua,
             CURLOPT_TIMEOUT => 10,
-            CURLOPT_HTTPGET => true,
+            CURLOPT_POST => true,
             CURLOPT_RETURNTRANSFER => true
         ];
         curl_setopt_array($curl, $options);
