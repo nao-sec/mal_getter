@@ -112,34 +112,34 @@ class Rig
         // }
 
         // var LinkToUrl = 'RIG URL'
-        $url = explode("var LinkToUrl = '", $html);
-        if(count($url) < 2)
-        {
-            echo '[!] Failed to get landing page' . PHP_EOL;
-            exit(-1);
-        }
-        $url = $url[1];
-        $url = explode("'", $url);
-        if(count($url) < 2)
-        {
-            echo '[!] Failed to get landing page' . PHP_EOL;
-            exit(-1);
-        }
-        $url = $url[0];
-        echo '[+] ' . $url . PHP_EOL;
-        $curl = curl_init($url);
-        $options =
-        [
-            CURLOPT_USERAGENT => $ua,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_POST => true,
-            CURLOPT_RETURNTRANSFER => true
-        ];
-        curl_setopt_array($curl, $options);
-        $html = curl_exec($curl);
-        curl_close($curl);
-        file_put_contents(\Share::$_['dir'] . \Share::$_['count'] . '.html', $html);
-        \Share::$_['count']++;
+        // $url = explode("var LinkToUrl = '", $html);
+        // if(count($url) < 2)
+        // {
+        //     echo '[!] Failed to get landing page' . PHP_EOL;
+        //     exit(-1);
+        // }
+        // $url = $url[1];
+        // $url = explode("'", $url);
+        // if(count($url) < 2)
+        // {
+        //     echo '[!] Failed to get landing page' . PHP_EOL;
+        //     exit(-1);
+        // }
+        // $url = $url[0];
+        // echo '[+] ' . $url . PHP_EOL;
+        // $curl = curl_init($url);
+        // $options =
+        // [
+        //     CURLOPT_USERAGENT => $ua,
+        //     CURLOPT_TIMEOUT => 10,
+        //     CURLOPT_POST => true,
+        //     CURLOPT_RETURNTRANSFER => true
+        // ];
+        // curl_setopt_array($curl, $options);
+        // $html = curl_exec($curl);
+        // curl_close($curl);
+        // file_put_contents(\Share::$_['dir'] . \Share::$_['count'] . '.html', $html);
+        // \Share::$_['count']++;
 
         $code = explode('<script>', $html);
         unset($code[0]);
