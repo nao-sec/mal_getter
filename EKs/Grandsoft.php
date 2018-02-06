@@ -49,8 +49,6 @@ class Grandsoft
             exit(-1);
         }
         $html = $response['body'] . '';
-        file_put_contents(\Share::$_['dir'] . \Share::$_['count'] . '.bin', $html);
-        \Share::$_['count']++;
 
         $data = [];
         for ($i = 0; $i < strlen($html); $i++) {
@@ -58,9 +56,9 @@ class Grandsoft
             $key = $key ^ 0x48;
             $data[] = ($html[$i] ^ $key);
         }
-        $data = implode('', $data);
-        $html = $response['body'] . '';
-        file_put_contents(\Share::$_['dir'] . \Share::$_['count'] . '.bin', $html);
-        \Share::$_['count']++;
+        $malware = implode('', $data);
+        $sha256 = hash('sha256', $malware);
+        file_put_contents(\Share::$_['dir'] . $sha256 . '.bin', $malware);
+        echo '[!] ' . $sha256 . '.bin' . PHP_EOL;
     }
 }
