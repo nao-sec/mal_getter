@@ -2,16 +2,20 @@
 It is a tool for dropping malware from EK  
 
 Currently this tool can analyze
+- Bloodlust
 - Decimal IP
 - Despicable
 - EITest
 - Fobos
 - GoodMan
+- Ngay
 - Rulan
 - Seamless
-- Rig Exploit Kit
-- Terror Exploit Kit
+- GrandSoft Exploit Kit
 - KaiXin Exploit Kit
+- Rig Exploit Kit
+- Sundown Exploit Kit
+- Terror Exploit Kit
 
 It depends on Campaign and EK implementation,  
 so the possibility that this will not work is very high.

@@ -49,7 +49,7 @@ if($campaign !== 'Kaixin')
     echo '[+] ' . $url . PHP_EOL;
 }
 $ek_url = ('Campaign\\' . $campaign)::analyze($url);
-if ($campaign !== 'Kaixin' && $ek_url === $url) {
+if ($campaign !== 'Kaixin' && $campaign !== 'Bloodlust' && $ek_url === $url) {
     echo '[!] Failed to get EK URL' . PHP_EOL;
     exit(-1);
 }
