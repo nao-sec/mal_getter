@@ -19,6 +19,11 @@ class Request
             ];
         }
 
+        $is_grandsoft = false;
+        if($ref === 'grandsoft')
+        {
+            $is_grandsoft = true;
+        }
         if ($ref == null) {
             $ref = $url;
         }
@@ -28,19 +33,37 @@ class Request
 
         $client = new Client(['verify' => false]);
         try {
-            $response = $client->request
+            if($is_grandsoft)
+            {
+                $response = $client->request
                 (
-                'GET',
-                $url,
-                [
-                    'headers' =>
+                    'GET',
+                    $url,
                     [
-                        'User-Agent' => $u,
-                        'Referer' => $ref,
-                    ],
-                    'timeout' => 5,
-                ]
-            );
+                        'headers' =>
+                        [
+                            'User-Agent' => $u
+                        ],
+                        'timeout' => 5,
+                    ]
+                );
+            }
+            else
+            {
+                $response = $client->request
+                (
+                    'GET',
+                    $url,
+                    [
+                        'headers' =>
+                        [
+                            'User-Agent' => $u,
+                            'Referer' => $ref,
+                        ],
+                        'timeout' => 5,
+                    ]
+                );
+            }
 
             return
                 [

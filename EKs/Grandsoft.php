@@ -43,18 +43,18 @@ class Grandsoft
         $url = $base_url . "/2/" . $key;
 
         echo '[+] ' . $url . PHP_EOL;
-        $response = \Request::get($url, $old_url, 'Mozilla/4.0 (compatible; Win32; WinHttp.WinHttpRequest.5)');
+        $response = \Request::get($url, 'grandsoft', 'Mozilla/4.0 (compatible; Win32; WinHttp.WinHttpRequest.5)');
         if ($response['status'] < 200 || $response['status'] >= 400) {
             echo '[!] Server Error...' . PHP_EOL;
             exit(-1);
         }
-        $html = $response['body'] . '';
+        $enc_binary = $response['body'] . '';
 
         $data = [];
-        for ($i = 0; $i < strlen($html); $i++) {
+        for ($i = 0; $i < strlen($enc_binary); $i++) {
             $key = ($key + 0xAA) & 0xFF;
             $key = $key ^ 0x48;
-            $data[] = ($html[$i] ^ $key);
+            $data[] = chr(ord($enc_binary[$i]) ^ $key);
         }
         $malware = implode('', $data);
         $sha256 = hash('sha256', $malware);
